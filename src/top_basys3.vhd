@@ -100,7 +100,7 @@ begin
             w_alu_result when "1000",
             (others => '0') when others;
 
-    u_twos_comp : entity work.twoscomp_decimal
+   u_twos_comp : entity work.twos_comp
         port map(
             i_bin  => w_display_bin,
             o_sign => w_sign_bit,
