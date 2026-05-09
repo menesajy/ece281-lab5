@@ -39,7 +39,38 @@ end controller_fsm;
 
 architecture FSM of controller_fsm is
 
+    type sm_state is (s_clear, s_load_A, s_load_B, s_result);
+    signal f_state : sm_state := s_clear;
+
 begin
 
+    process(i_adv)
+    begin
+        if rising_edge(i_adv) then
+            if i_reset = '1' then
+                f_state <= s_clear;
+            else
+                case f_state is
+                    when s_clear =>
+                        f_state <= s_load_A;
+
+                    when s_load_A =>
+                        f_state <= s_load_B;
+
+                    when s_load_B =>
+                        f_state <= s_result;
+
+                    when s_result =>
+                        f_state <= s_clear;
+                end case;
+            end if;
+        end if;
+    end process;
+
+    with f_state select
+        o_cycle <= "0001" when s_clear,
+                   "0010" when s_load_A,
+                   "0100" when s_load_B,
+                   "1000" when s_result;
 
 end FSM;
