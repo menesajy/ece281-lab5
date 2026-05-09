@@ -100,7 +100,7 @@ begin
             w_alu_result when "1000",
             (others => '0') when others;
 
-    u_twos_comp : entity work.twos_comp
+    u_twos_comp : entity work.twoscomp_decimal
         port map(
             i_bin  => w_display_bin,
             o_sign => w_sign_bit,
@@ -125,10 +125,10 @@ begin
         );
 
     u_sevenseg : entity work.sevenseg_decoder
-        port map(
-            i_Hex   => w_hex,
-            o_seg_n => w_seg
-        );
+    port map(
+        i_hex => w_hex,
+        o_seg => w_seg
+    );
 
     
     an <= "1111" when w_cycle = "0001" else w_an;
